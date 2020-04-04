@@ -1,12 +1,11 @@
-def iter_slice(List, step):
-    ltg = len(List)
+def iter_slice(iList, step):
+    ltg = len(iList)
     no = 0
-    i = 0
     while no < ltg:
-        tem = List[no:(i + 1) * step]
-        yield tem
-        i += 1
+        yield iList[no:(no // 2 + 1) * step]
         no += step
 
-for x in iter_slice([1, 2, 3, 4, 5, 6, 7, 8], ):
+
+
+for x in iter_slice([1, 2, 3, 4, 5, 6], ):
     print(x)
