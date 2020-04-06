@@ -33,6 +33,12 @@ def is_domain_1(domain):
     except:
         return False
 
+#域名验证用这个
+def is_domain_2(ioc):
+    if not re.search('^([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,10}$', ioc):
+        return False
+    return True
+
 
 print(is_domain('www..com'))
 print(is_ip("127.0.0.1"))
