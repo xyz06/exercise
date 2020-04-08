@@ -1,8 +1,12 @@
 import os
 import zipfile
 import tarfile
+import argparse
 
+parser = argparse.ArgumentParser(description='manual to this script')
+parser.add_argument('filepath', type=str, help='input one filepath')
 
+arg = parser.parse_args()
 
 def unpack(filepath):
     p = filepath.rindex('.')
@@ -16,13 +20,12 @@ def unpack(filepath):
         if ext == ".zip":
             unzip = zipfile.ZipFile(filepath)
 
-            #全部解压
+            # all decompress
             # unzip.extractall(newfilepath)
             # print(unzip.namelist())
             # unzip.close()
 
-
-            #一个一个解压
+            #  one by on Decompress
             for file in unzip.namelist():
                 unzip.extract(file, newfilepath)
                 print(file)
@@ -32,23 +35,19 @@ def unpack(filepath):
         elif ext == ".gz":
             untar = tarfile.open(filepath)
 
-            # 全部解压
+            # all decompress
             # untar.extractall(newfilepath)
             # print(untar.getnames())
             # untar.close()
 
-
-            # 一个一个解压
+            # one by one decompress
             for file in untar.getnames():
-                untar.extract(file,newfilepath)
+                untar.extract(file, newfilepath)
                 print(file)
             untar.close()
 
     except Exception as err:
         print(err)
-
-
-
 
 
 def zip(path):
@@ -72,3 +71,7 @@ def tar(path):
             t.add(pathfile)
         print(root, dir, files)
     t.close()
+
+
+if __name__ == "__main__":
+    unpack(arg.filepath)

@@ -1,3 +1,13 @@
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--List', help='input a array', nargs='+')
+parser.add_argument('--step', help='input a number', type=int)
+
+args = parser.parse_args()
+
+
 def iter_slice(iList, step):
     ltg = len(iList)
     no = 0
@@ -6,6 +16,7 @@ def iter_slice(iList, step):
         no += step
 
 
+if __name__ == "__main__":
 
-for x in iter_slice([1, 2, 3, 4, 5, 6], ):
-    print(x)
+    for x in iter_slice(args.List, args.step):
+        print(x)
