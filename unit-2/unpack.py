@@ -3,18 +3,10 @@ import zipfile
 import tarfile
 import argparse
 
-parser = argparse.ArgumentParser(description='manual to this script')
-parser.add_argument('filepath', type=str, help='input one filepath')
 
-arg = parser.parse_args()
-
-def unpack(filepath):
+def unpack(filepath, newfilepath):
     p = filepath.rindex('.')
     ext = filepath[p:]
-    if ext == ".gz":
-        newfilepath = filepath[:p - 4]
-    else:
-        newfilepath = filepath[:p]
 
     try:
         if ext == ".zip":
@@ -74,4 +66,8 @@ def tar(path):
 
 
 if __name__ == "__main__":
-    unpack(arg.filepath)
+    parser = argparse.ArgumentParser(description='manual to this script')
+    parser.add_argument('--fin', type=str, help='input one filepath')
+    parser.add_argument('--out', type=str, help='input new filepath')
+    args = parser.parse_args()
+    unpack(args.fin,  args.out)
