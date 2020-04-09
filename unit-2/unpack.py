@@ -70,4 +70,7 @@ if __name__ == "__main__":
     parser.add_argument('--fin', type=str, help='input one filepath')
     parser.add_argument('--out', type=str, help='input new filepath')
     args = parser.parse_args()
-    unpack(args.fin,  args.out)
+    if os.path.exists(args.fin):
+        unpack(args.fin,  args.out)
+    else:
+        print("[Error]:No sush file")
