@@ -26,7 +26,7 @@ def info_filter(info):
 
 def get_info(info):
     global allInfo
-    oneInfo = []   # filter after one info
+    oneInfo = []  # filter after one info
     start = re.search("(TCP | UDP)", info, re.I)
     if start == None:
         msg = info
@@ -34,7 +34,7 @@ def get_info(info):
         msg = info[:start.start()]
     oneList = msg.strip(" ").strip("\n").split(" ")
     for i in oneList:
-        if i != "" and i != "0":
+        if not i and i != "0":
             oneInfo.append(i)
     if not start:
         return
@@ -55,17 +55,18 @@ def cmd(systemType):
 
 
 def spider_geoip(ip):
-    url = "https://www.ip.cn/?ip=" + ip
-    ua_list = [
+    try:
+        url = "https://www.ip.cn/?ip=" + ip
+        ua_list = [
         "Mozilla / 5.0(Windows NT 6.1; Win64;x64) AppleWebKit / 537.36(KHTML, like Gecko) Chrome / 78.0.3904.108 Safari / 537.36"
         " Mozilla / 5.0(Windows NT 6.1;WOW64) AppleWebKit / 535.1(KHTML, like Gecko) Chrome / 14.0835.163 Safari / 535.1"
         "Mozilla / 5.0(Macintosh; Intel Mac OSX10_7_0) AppleWebKit / 535.11(KHTML, like Gecko) Chrome / 17.0.963.56 Safari / 535.11"
         "Opera / 9.80(Windows NT 6.1; U ; en) Presto / 2.8.131 Version / 11.11"
         "Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko"
-    ]
-    req = urllib.request.Request(url, headers={'User-Agent': random.choice(ua_list)})
-    data = urllib.request.urlopen(req, timeout=20).read().decode()
-    try:
+        ]
+        req = urllib.request.Request(url, headers={'User-Agent': random.choice(ua_list)})
+        data = urllib.request.urlopen(req, timeout=20).read().decode()
+
         soup = BeautifulSoup(data, "html.parser")
         p = soup.select("div[class='well'] p")[-1]
         geoip = p.select("code")[0].text
@@ -124,7 +125,7 @@ def write_file(out, data):
     if not os.path.exists(out):
         f = open(out, "w")
     else:
-        f = open(out, "a")
+        f = open(out, "a+")
 
     for d in data:
         f.write(json.dumps(d) + "\n")
@@ -147,6 +148,7 @@ def write_mongo(data, yamlpath):
     mycol.insert_many(data)
     print("Write mongo successful")
     return
+
 
 def process(out, config, systemType):
     global datas
