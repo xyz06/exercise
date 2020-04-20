@@ -2,7 +2,7 @@ import re
 import argparse
 
 
-def print_with_width(text, width):
+def print_with_width(text, width=80):
     n = width
     print(text[0:n])
     while n < len(text):
@@ -27,6 +27,6 @@ def print_with_width(text, width):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--text", type=str, required=True, help="input some English words")
-    parser.add_argument("--width", type=int, required=True, help="it is per line width")
+    parser.add_argument("--width", type=int, default=80, help="it is per line width")
     args = parser.parse_args()
     print_with_width(args.text, args.width)
