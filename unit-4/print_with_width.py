@@ -2,16 +2,33 @@ import re
 import argparse
 
 def fristword_upper(text):
-    words = text[0].upper()
+    lists = []
+    upperWord = []
+    words = ""
     eof = [".", "!", "?", "......", "\""]
-    for i in range(1, len(text)):
-        if text[i-1] in eof:
-            words += text[i].upper()
-        elif text[i-2] in eof and i-2 > 0:
+    noWord  = [",", ".", " "]
+    for i in range(0, len(text)):
+        if text[i] not in eof:
+            lists.append(1)
+        else:
+            lists.append(0)
+            for j in range(i+1,len(text)):
+                if text[j] not in noWord:
+                    upperWord.append(j)
+                    break
+
+    for i in range(0, len(text)):
+        if text[i] != " ":
+            upperWord.append(i)
+            break
+
+    for i in range(0, len(text)):
+        if i in upperWord:
             words += text[i].upper()
         else:
             words += text[i]
     return words
+
 
 def print_with_width(text, width, paragraph):
     n = width
@@ -38,14 +55,14 @@ def print_with_width(text, width, paragraph):
                 print(words[n:n + width])
                 n = n + width
 
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--text", type=str, required=True, help="input some English words")
-    parser.add_argument("--width", type=int, default=80, help="it is per line width")
-    parser.add_argument("--paragraph", default="False", action="store_true")
-    args = parser.parse_args()
-    print_with_width(args.text, args.width, args.paragraph)
+#
+# if __name__ == "__main__":
+#     parser = argparse.ArgumentParser()
+#     parser.add_argument("--text", type=str, required=True, help="input some English words")
+#     parser.add_argument("--width", type=int, default=80, help="it is per line width")
+#     parser.add_argument("--paragraph", default="False", action="store_true")
+#     args = parser.parse_args()
+#     print_with_width(args.text, args.width, args.paragraph)
 
 
 
