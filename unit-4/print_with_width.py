@@ -1,26 +1,17 @@
 import re
 import argparse
 
-
 def fristword_upper(text):
     words = text[0].upper()
-    flag = False
+    eof = [".", "!", "?", "......", "\""]
     for i in range(1, len(text)):
-        if flag:
-            if text[i] == " ":
-                flag = True
-                words += text[i]
-                continue
-            else:
-                flag = False
-                words += text[i].upper()
-                continue
-        words += text[i]
-        if text[i] == "." and i < len(text) - 1:
-            flag = True
-            continue
+        if text[i-1] in eof:
+            words += text[i].upper()
+        elif text[i-2] in eof and i-2 > 0:
+            words += text[i].upper()
+        else:
+            words += text[i]
     return words
-
 
 def print_with_width(text, width, paragraph):
     n = width
