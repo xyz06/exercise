@@ -1,33 +1,23 @@
 import re
 import argparse
 
-def fristword_upper(text):
-    lists = []
-    upperWord = []
-    words = ""
-    eof = [".", "!", "?", "......", "\""]
-    noWord  = [",", ".", " "]
-    for i in range(0, len(text)):
-        if text[i] not in eof:
-            lists.append(1)
-        else:
-            lists.append(0)
-            for j in range(i+1,len(text)):
-                if text[j] not in noWord:
-                    upperWord.append(j)
-                    break
 
-    for i in range(0, len(text)):
-        if text[i] != " ":
-            upperWord.append(i)
-            break
-
-    for i in range(0, len(text)):
-        if i in upperWord:
-            words += text[i].upper()
+def firstword_uppper(text):
+    eof = [".", "!", "?", '"']
+    new_text = ''
+    need_upper = True
+    for c in text:
+        if c in eof:
+            need_upper = True
+        elif c == ",":
+            need_upper = False
         else:
-            words += text[i]
-    return words
+            if need_upper and ('a' <= c <= 'z' or 'A' <= c <= 'Z'):
+                c = c.upper()
+                need_upper = False
+        new_text += c
+
+    return new_text
 
 
 def print_with_width(text, width, paragraph):
@@ -55,14 +45,15 @@ def print_with_width(text, width, paragraph):
                 print(words[n:n + width])
                 n = n + width
 
-#
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("--text", type=str, required=True, help="input some English words")
-#     parser.add_argument("--width", type=int, default=80, help="it is per line width")
-#     parser.add_argument("--paragraph", default="False", action="store_true")
-#     args = parser.parse_args()
-#     print_with_width(args.text, args.width, args.paragraph)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--text", type=str, required=True, help="input some English words")
+    parser.add_argument("--width", type=int, default=80, help="it is per line width")
+    parser.add_argument("--paragraph", default="False", action="store_true")
+    args = parser.parse_args()
+    print_with_width(args.text, args.width, args.paragraph)
 
 
 
