@@ -6,7 +6,7 @@ import argparse
 
 
 
-def runing_text(text,color):
+def runing_text(title,color):
     pygame.init()
     screen = pygame.display.set_mode((600, 300))
     pygame.display.set_caption("hello world")
@@ -23,8 +23,8 @@ def runing_text(text,color):
     vel_x = 2
     vel_y = 1
     myfont = pygame.font.Font(None, 60)
-    mytext = myfont.render(text, True, colors[color])
-    ztx, zty, ztw, zth = mytext.get_rect()
+    mytitle = myfont.render(title, True, colors[color])
+    ztx, zty, ztw, zth = mytitle.get_rect()
 
     flag = True
     while 1:
@@ -52,9 +52,9 @@ def runing_text(text,color):
             y += vel_y
             if x > 600 - ztw or x < 0:
                 vel_x = -vel_x
-                mytext = myfont.render(text, True, random.choice(list(colors.values())))
+                mytitle = myfont.render(title, True, random.choice(list(colors.values())))
             if y > 260 or y < 0:
-                mytext = myfont.render(text, True, random.choice(list(colors.values())))
+                mytitle = myfont.render(title, True, random.choice(list(colors.values())))
                 vel_y = -vel_y
 
             if y == 260 and x == 102:
@@ -63,14 +63,14 @@ def runing_text(text,color):
                 x = 0
                 y = 0
 
-        screen.blit(mytext, (x, y))
+        screen.blit(mytitle, (x, y))
         pygame.display.update()
-        time.sleep(0.005)
+        time.sleep(0.006)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--text", type=str, required=True)
+    parser.add_argument("--title", type=str, required=True)
     parser.add_argument("--color", type=str, default='red', help="chocie one color [white, blue, red, orange, yellow, green] ")
     args = parser.parse_args()
-    runing_text(args.text,args.color)
+    runing_text(args.title,args.color)
