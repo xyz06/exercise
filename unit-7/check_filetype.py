@@ -23,7 +23,7 @@ def bytes2hex(bytes):
 def file_type(filepath):
     try:
         binfile = open(filepath, "rb")
-        ftype = "unknow"
+        ftype = "unknown"
         for hcode in TYPES.keys():
             numOfBytes = len(hcode) // 2
             binfile.seek(0)
